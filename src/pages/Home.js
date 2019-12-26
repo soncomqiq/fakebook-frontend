@@ -3,103 +3,24 @@ import { Row, Col } from 'antd'
 import PostList from '../components/post/PostList'
 import CreatePost from '../components/post/CreatePost'
 import Axios from '../config/api.service'
-import jwtDecode from 'jwt-decode';
+import { connect } from 'react-redux'
 
-export default class Home extends React.Component {
+class Home extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      owner: {
-        name: "Nuttachai Kulthammanit",
-        profilePic: "https://scontent.fbkk22-3.fna.fbcdn.net/v/t1.0-1/c0.0.24.24a/p24x24/71561886_1609849782479256_2419419055669641216_n.jpg?_nc_cat=111&_nc_oc=AQlLEzSt2ysLGxaBJ27i9_wKJe4xw4p1nN3uZZa5bLkBfO1CTt_LIUeILv_o_d7fDqQ&_nc_ht=scontent.fbkk22-3.fna&oh=c0125b6725de188bb0f9e5ff94ce72f8&oe=5E4A5531"
-      },
-      postList:
-        [
-          {
-            id: 1,
-            author: {
-              name: "Nuttachai Kulthammanit",
-              profilePic: "https://scontent.fbkk22-3.fna.fbcdn.net/v/t1.0-1/c0.0.24.24a/p24x24/71561886_1609849782479256_2419419055669641216_n.jpg?_nc_cat=111&_nc_oc=AQlLEzSt2ysLGxaBJ27i9_wKJe4xw4p1nN3uZZa5bLkBfO1CTt_LIUeILv_o_d7fDqQ&_nc_ht=scontent.fbkk22-3.fna&oh=c0125b6725de188bb0f9e5ff94ce72f8&oe=5E4A5531"
-            },
-            message: "สวัสดีครับพี่น้องค้าบ ถึงแม้ผมจะฉลาดแต่ผมก็นิสัยดีนะค้าบ",
-            image_url: "https://scontent.fbkk22-3.fna.fbcdn.net/v/t1.0-9/73246481_2435477546715547_5247929318172000256_n.jpg?_nc_cat=111&_nc_oc=AQlFl6roOYPcuycI02WeHzC7xdXsvrqHB3baMb3gyXqrv5_mMLhTMeUxA6cGGbKmY3E&_nc_ht=scontent.fbkk22-3.fna&oh=f88eadb873e0211e94a2ba31f32e69f3&oe=5E53FD9C",
-            date: "15 ชมที่แล้ว",
-            commentList:
-              [
-                {
-                  id: 1,
-                  content: "I met the singer at the Brayan Star Tour and he was so nice and cuter in person! :)",
-                  datetime: "2 Days ago",
-                  user: {
-                    name: "Apiwut Kittiparkun",
-                    profilePic: "https://scontent.fbkk22-3.fna.fbcdn.net/v/t1.0-9/72331485_3500832969926684_3328255275332272128_n.jpg?_nc_cat=102&_nc_eui2=AeGPg3waOA9Kh0BJOAJ_CLfuY37V7K59m3avbKM5eyx9eFDYJxJDFYhuR1Lbq6kmxSdO3_rgYk0dBJfxKiW1KRQ3lUUnqi3VP_M0_TqdSOib-Q&_nc_oc=AQkD1hjKc-w9eeWYDLGq8Si6esQlwzS_l-XB76MDvdGtyFzHA0kVA6DMQFOIDbwKbVI&_nc_ht=scontent.fbkk22-3.fna&oh=2786b485e2e7f634b96ec9ac451acbee&oe=5E4228CB"
-                  },
-                },
-                {
-                  id: 2,
-                  content: "I met the singer at the Brayan Star Tour and he was so nice and cuter in person! :)",
-                  datetime: "2 Days ago",
-                  user: {
-                    name: "Apiwut Kittiparkun",
-                    profilePic: "https://scontent.fbkk22-3.fna.fbcdn.net/v/t1.0-9/72331485_3500832969926684_3328255275332272128_n.jpg?_nc_cat=102&_nc_eui2=AeGPg3waOA9Kh0BJOAJ_CLfuY37V7K59m3avbKM5eyx9eFDYJxJDFYhuR1Lbq6kmxSdO3_rgYk0dBJfxKiW1KRQ3lUUnqi3VP_M0_TqdSOib-Q&_nc_oc=AQkD1hjKc-w9eeWYDLGq8Si6esQlwzS_l-XB76MDvdGtyFzHA0kVA6DMQFOIDbwKbVI&_nc_ht=scontent.fbkk22-3.fna&oh=2786b485e2e7f634b96ec9ac451acbee&oe=5E4228CB"
-                  },
-                },
-                {
-                  id: 3,
-                  content: "I met the singer at the Brayan Star Tour and he was so nice and cuter in person! :)",
-                  datetime: "2 Days ago",
-                  user: {
-                    name: "Apiwut Kittiparkun",
-                    profilePic: "https://scontent.fbkk22-3.fna.fbcdn.net/v/t1.0-9/72331485_3500832969926684_3328255275332272128_n.jpg?_nc_cat=102&_nc_eui2=AeGPg3waOA9Kh0BJOAJ_CLfuY37V7K59m3avbKM5eyx9eFDYJxJDFYhuR1Lbq6kmxSdO3_rgYk0dBJfxKiW1KRQ3lUUnqi3VP_M0_TqdSOib-Q&_nc_oc=AQkD1hjKc-w9eeWYDLGq8Si6esQlwzS_l-XB76MDvdGtyFzHA0kVA6DMQFOIDbwKbVI&_nc_ht=scontent.fbkk22-3.fna&oh=2786b485e2e7f634b96ec9ac451acbee&oe=5E4228CB"
-                  },
-                }
-              ],
-          },
-          {
-            id: 2,
-            author: {
-              name: "Apiwut Kittiparkun",
-              profilePic: "https://scontent.fbkk22-3.fna.fbcdn.net/v/t1.0-9/72331485_3500832969926684_3328255275332272128_n.jpg?_nc_cat=102&_nc_eui2=AeGPg3waOA9Kh0BJOAJ_CLfuY37V7K59m3avbKM5eyx9eFDYJxJDFYhuR1Lbq6kmxSdO3_rgYk0dBJfxKiW1KRQ3lUUnqi3VP_M0_TqdSOib-Q&_nc_oc=AQkD1hjKc-w9eeWYDLGq8Si6esQlwzS_l-XB76MDvdGtyFzHA0kVA6DMQFOIDbwKbVI&_nc_ht=scontent.fbkk22-3.fna&oh=2786b485e2e7f634b96ec9ac451acbee&oe=5E4228CB"
-            },
-            message: "img elements must have an alt prop, either with meaningful text, or an empty string for decorative images",
-            image_url: "",
-            date: "15 ชมที่แล้ว",
-            commentList:
-              [
-                {
-                  id: 4,
-                  content: "I met the singer at the Brayan Star Tour and he was so nice and cuter in person! :)",
-                  datetime: "2 Days ago",
-                  user: {
-                    name: "Apiwut Kittiparkun",
-                    profilePic: "https://scontent.fbkk22-3.fna.fbcdn.net/v/t1.0-9/72331485_3500832969926684_3328255275332272128_n.jpg?_nc_cat=102&_nc_eui2=AeGPg3waOA9Kh0BJOAJ_CLfuY37V7K59m3avbKM5eyx9eFDYJxJDFYhuR1Lbq6kmxSdO3_rgYk0dBJfxKiW1KRQ3lUUnqi3VP_M0_TqdSOib-Q&_nc_oc=AQkD1hjKc-w9eeWYDLGq8Si6esQlwzS_l-XB76MDvdGtyFzHA0kVA6DMQFOIDbwKbVI&_nc_ht=scontent.fbkk22-3.fna&oh=2786b485e2e7f634b96ec9ac451acbee&oe=5E4228CB"
-                  },
-                },
-                {
-                  id: 5,
-                  content: "I met the singer at the Brayan Star Tour and he was so nice and cuter in person! :)",
-                  datetime: "2 Days ago",
-                  user: {
-                    name: "Apiwut Kittiparkun",
-                    profilePic: "https://scontent.fbkk22-3.fna.fbcdn.net/v/t1.0-9/72331485_3500832969926684_3328255275332272128_n.jpg?_nc_cat=102&_nc_eui2=AeGPg3waOA9Kh0BJOAJ_CLfuY37V7K59m3avbKM5eyx9eFDYJxJDFYhuR1Lbq6kmxSdO3_rgYk0dBJfxKiW1KRQ3lUUnqi3VP_M0_TqdSOib-Q&_nc_oc=AQkD1hjKc-w9eeWYDLGq8Si6esQlwzS_l-XB76MDvdGtyFzHA0kVA6DMQFOIDbwKbVI&_nc_ht=scontent.fbkk22-3.fna&oh=2786b485e2e7f634b96ec9ac451acbee&oe=5E4228CB"
-                  },
-                },
-                {
-                  id: 6,
-                  content: "I met the singer at the Brayan Star Tour and he was so nice and cuter in person! :)",
-                  datetime: "2 Days ago",
-                  user: {
-                    name: "Apiwut Kittiparkun",
-                    profilePic: "https://scontent.fbkk22-3.fna.fbcdn.net/v/t1.0-9/72331485_3500832969926684_3328255275332272128_n.jpg?_nc_cat=102&_nc_eui2=AeGPg3waOA9Kh0BJOAJ_CLfuY37V7K59m3avbKM5eyx9eFDYJxJDFYhuR1Lbq6kmxSdO3_rgYk0dBJfxKiW1KRQ3lUUnqi3VP_M0_TqdSOib-Q&_nc_oc=AQkD1hjKc-w9eeWYDLGq8Si6esQlwzS_l-XB76MDvdGtyFzHA0kVA6DMQFOIDbwKbVI&_nc_ht=scontent.fbkk22-3.fna&oh=2786b485e2e7f634b96ec9ac451acbee&oe=5E4228CB"
-                  },
-                }
-              ],
-          }
-        ],
+      owner: {},
+      postList: []
     }
   }
 
   componentDidMount() {
+    this.setState({
+      owner: {
+        name: this.props.user.name,
+        profilePic: this.props.user.profilePic
+      }
+    })
     Axios.get('/feed').then((response) => {
       this.setState({
         postList: response.data
@@ -112,7 +33,7 @@ export default class Home extends React.Component {
       <Row type="flex" justify="center">
         <Col md={12} sm={16} xs={24}>
           <Row>
-            <CreatePost avatarSrc="https://scontent.fbkk22-3.fna.fbcdn.net/v/t1.0-1/c0.0.24.24a/p24x24/71561886_1609849782479256_2419419055669641216_n.jpg?_nc_cat=111&_nc_oc=AQlLEzSt2ysLGxaBJ27i9_wKJe4xw4p1nN3uZZa5bLkBfO1CTt_LIUeILv_o_d7fDqQ&_nc_ht=scontent.fbkk22-3.fna&oh=c0125b6725de188bb0f9e5ff94ce72f8&oe=5E4A5531" />
+            <CreatePost avatarSrc={this.state.owner.profilePic} />
           </Row>
           <Row>
             <PostList
@@ -124,3 +45,11 @@ export default class Home extends React.Component {
     )
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user
+  }
+}
+
+export default connect(mapStateToProps, null)(Home)
