@@ -22,6 +22,7 @@ class Home extends React.Component {
       }
     })
     Axios.get('/feed').then((response) => {
+      console.log(response)
       this.setState({
         postList: response.data
       })
